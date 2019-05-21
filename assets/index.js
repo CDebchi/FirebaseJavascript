@@ -25,15 +25,14 @@ async function omdb(x){
 //Load Api
 fetch(`http://omdbapi.com/?apikey=b643c3d7&t=avatar`).then(
         response => response.json().then(function (json){
-            console.log(json) 
         }
             
         )
     )
   
-    
+    var tab2 = []; 
 async function load_index(){
-    var tab2 = [];
+    
     var doc = '';
     var i = 0;
      var ax = await fetch('https://ghibliapi.herokuapp.com/films').then(
@@ -42,8 +41,7 @@ async function load_index(){
             var el = omdb(element.title)
             el.then(async elem2 => {
                 let a=elem2
-               var bx = await tab2.push(a);               
-              
+               var bx = await tab2.push(a); 
                    doc += `   <div class="col-3">
                    <!-- Card Dark -->
                    <div class="card">
@@ -62,7 +60,7 @@ async function load_index(){
                            <!-- Social shares button -->
                            
                            <!-- Title -->
-                           <h4 class="card-title">${tab2[i].Title}</h4>
+                           <h4 class="card-title">${a.Title}</h4>
                            <hr class="hr-light">
                            <!-- Text -->
                            <p class="card-text white-text mb-4">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -80,11 +78,15 @@ async function load_index(){
                document.getElementById('moovie-list').innerHTML = doc; 
             })
             })
+            
         })
         
     )
+    console.log(tab2)
    
 }
+
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyBOMmfsGGW4LcWfRKlspzhc88SCHFeZ0sQ",
@@ -100,9 +102,7 @@ firebase.initializeApp(firebaseConfig);
 
 defaultFirestore = firebase.database();
 
-
 var user = firebase.auth().currentUser;
-console.log(firebase.auth())
 // method 1 call information
 var refDb = new Firebase("https://animals-73d13.firebaseio.com/users");
 var tab = [];
@@ -110,7 +110,6 @@ refDb.once("value", function (snapshot){
     snapshot.forEach(element => {
         tab.push(element.val());
     });
-    console.log(tab)
 })
 // End Method 1
 
